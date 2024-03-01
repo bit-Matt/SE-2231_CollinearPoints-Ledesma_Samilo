@@ -1,0 +1,4 @@
+You can run with
+npx parcel index.html
+
+yarn add p5
