@@ -1,4 +1,8 @@
 import p5 from "p5";
+import Point from "./src/Point";
+import LineSegment from "./src/LineSegment";
+import BruteCollinearPoints from "./src/BruteCollinearPoints";
+import FastCollinearPoints from "./src/FastCollinearPoints";
 
 const width: number = 800;
 const height: number = 500;
@@ -37,89 +41,6 @@ let sketch = function (p) {
     p.text("(0, 0)", padding + 10, height - 30);
   };
 
-  class Point {
-    x: number;
-    y: number;
-    p;
-
-    constructor(x: number, y: number) {
-      this.x = x;
-      this.y = y;
-    }
-
-    draw(): void {
-      // DO NOT MODIFY
-
-      p.stroke("black");
-      p.strokeWeight(800);
-      p.point(this.x, this.y);
-    }
-
-    drawTo(that: Point) {
-      // DO NOT MODIFY
-
-      p.stroke("black");
-      p.strokeWeight(200);
-      p.line(this.x, this.y, that.x, that.y);
-    }
-
-    slopeTo(that: Point): number {}
-  }
-
-  class LineSegment {
-    p: Point;
-    q: Point;
-
-    constructor(p: Point, q: Point) {
-      // DO NOT MODIFY
-
-      this.p = p;
-      this.q = q;
-    }
-
-    draw(): void {
-      // DO NOT MODIFY
-
-      p.stroke("black");
-      p.strokeWeight(2);
-      p.line(this.p.x, this.p.y, this.q.x, this.q.y);
-    }
-
-    toString(): string {
-      // DO NOT MODIFY
-
-      return `${this.p} -> ${this.q}`
-    }
-  }
-
-  class BruteCollinearPoints {
-    constructor(points: Point[]) {
-      // YOUR CODE HERE
-    }
-
-    numberOfSegments(): number {
-      // YOUR CODE HERE
-    }
-
-    segments(): LineSegment[] {
-      // YOUR CODE HERE
-    }
-  }
-
-  class FastCollinearPoints {
-    constructor(points: Point[]) {
-      // YOUR CODE HERE
-    }
-
-    numberOfSegments(): number {
-      // YOUR CODE HERE
-    }
-
-    segments(): LineSegment[] {
-      // YOUR CODE HERE
-    }
-  }
-
   // Declare your point objects here~
   // const point = new Point(19000, 10000);
   // const point2 = new Point(10000, 10000);
@@ -136,7 +57,7 @@ let sketch = function (p) {
 
   p.draw = function () {
     p.translate(padding, height - padding);
-    p.scale(1/100, -1/100);
+    p.scale(1 / 100, -1 / 100);
 
     // Call your draw and drawTo here.
 
