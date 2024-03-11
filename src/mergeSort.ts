@@ -1,15 +1,5 @@
-function mergeSort(array: any[]): any[] {
-  if (array.length <= 1) {
-      return array;
-  }
-  const middle = Math.floor(array.length / 2);
-  const leftHalf = array.slice(0, middle);
-  const rightHalf = array.slice(middle);
-  return merge(mergeSort(leftHalf), mergeSort(rightHalf));
-}
-
-function merge(left: any[], right: any[]): any[] {
-  let result: any[] = [];
+function merge(left: number[], right: number[]): number[] {
+  let result: number[] = [];
   let leftIndex = 0;
   let rightIndex = 0;
 
@@ -28,12 +18,19 @@ function merge(left: any[], right: any[]): any[] {
       concat(right.slice(rightIndex));
 }
 
+function mergeSort(array: number[]): number[] {
+  if (array.length <= 1) {
+      return array;
+  }
+  const mid = Math.floor(array.length / 2);
+  const left = array.slice(0, mid);
+  const right = array.slice(mid);
+  return merge(mergeSort(left), mergeSort(right));
+}
+
 // sample tests
-const sortedNumberArray: number[] =
+const numberArray: number[] =
     mergeSort([100, 38, 57, 5, 69, 9, 213]);
-const sortedStringArray: string[] =
-    mergeSort(['this', 'is', 'not', 'a', 'sorted', 'array']);
-console.log(sortedNumberArray);
-console.log(sortedStringArray);
+console.log(numberArray);
 
 export default { mergeSort };
