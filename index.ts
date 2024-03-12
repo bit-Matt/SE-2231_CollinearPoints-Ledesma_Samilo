@@ -79,6 +79,14 @@ let sketch = function (p) {
       // Acutal calculation
       return (that.y - this.y) / (that.x - this.x);
     }
+
+    compareTo(that: Point): number {
+      if (this.x < that.x) return -1;
+      if (this.x > that.x) return +1;
+      if (this.y < that.y) return -1;
+      if (this.y > that.y) return +1;
+      return 0;
+  }
   }
 
   class LineSegment {
@@ -103,7 +111,7 @@ let sketch = function (p) {
     toString(): string {
       // DO NOT MODIFY
 
-      return `${this.p} -> ${this.q}`;
+      return `[${this.p.x}, ${this.p.y}] -> [${this.q.x}, ${this.q.y}]`;
     }
   }
 
@@ -146,6 +154,8 @@ let sketch = function (p) {
   }
 
   class FastCollinearPoints {
+    private segmentsList: LineSegment[] = [];
+    
     constructor(points: Point[]) {
       if (points === null) {
         throw new Error("Null argument");
@@ -156,16 +166,44 @@ let sketch = function (p) {
       // if () {
       //   throw new Error('Contains duplicate points');
       // }
+      if (points.length < 4) {
+        throw new Error("Less than 4 points");
+      }
+
+      for (let i = 0; i < points.length; i++) {
+        const p = points[i];
+        const slopePoints = new Map<number, Point[]>();
+
+        for (let j = 0; j < points.length; j++) {
+          if (i === j) continue;
+          const q = points[j];
+          const slope = p.slopeTo(q);
+          const slopeArray = slopePoints.get(slope) || [];
+          slopeArray.push(q);
+          slopePoints.set(slope, slopeArray);
+        }
+
+        const sortedSlopePoints = Array.from(slopePoints.values()).map(arr => mergeSort(arr, (a, b) => a.compareTo(b)));
+
+        for (const slopeArray of sortedSlopePoints) {
+          if (slopeArray.length >= 3) {
+              slopeArray.push(p);
+              mergeSort(slopeArray, (a, b) => a.compareTo(b));
+              this.segmentsList.push(new LineSegment(slopeArray[0], slopeArray[slopeArray.length - 1]));
+          }
+        }
+        
+      }
     }
 
     numberOfSegments(): number {
       // YOUR CODE HERE
-      return 0;
+      return this.segmentsList.length;
     }
 
     segments(): LineSegment[] {
       // YOUR CODE HERE
-      return [];
+      return this.segmentsList.slice();
     }
   }
 
