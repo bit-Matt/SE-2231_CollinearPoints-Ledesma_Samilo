@@ -148,10 +148,10 @@ let sketch = function (p) {
   class FastCollinearPoints {
     constructor(points: Point[]) {
       if (points === null) {
-        throw new Error('Null argument');
+        throw new Error("Null argument");
       }
       if (points.some((point) => point.x === null || point.y === null)) {
-        throw new Error('Null coordinate in point');
+        throw new Error("Null coordinate in point");
       }
       // if () {
       //   throw new Error('Contains duplicate points');
@@ -184,39 +184,22 @@ let sketch = function (p) {
   ];
 
   // TEST BRUTE COLLIEAR POINTS
-  // function testBruteCollinearPoints(points: Point[]) {
-  //   let sketch = function (p) {
-  //     p.setup = function () {
-  //       p.createCanvas(width, height);
-  //       p.strokeWeight(3);
-  //       p.stroke("blue");
-  //     };
+  // p.draw = function () {
+  //   p.translate(padding, height - padding);
+  //   p.scale(1 / 100, -1 / 100);
 
-  //     p.draw = function () {
-  //       p.background(255);
+  //   for (const point of points) {
+  //     point.draw();
+  //   }
 
-  //       const bruteCollinearPoints = new BruteCollinearPoints(points);
+  //   const bruteCollinearPoints = new BruteCollinearPoints(points);
+  //   const segments = bruteCollinearPoints.segmentsRead();
 
-  //       const segments = bruteCollinearPoints.segmentsRead();
-
-  //       points.forEach((point) => {
-  //         p.stroke("black");
-  //         p.strokeWeight(8);
-  //         p.point(point.x, point.y);
-  //       });
-
-  //       segments.forEach((segment) => {
-  //         p.stroke("red");
-  //         p.strokeWeight(2);
-  //         p.line(segment.p.x, segment.p.y, segment.q.x, segment.q.y);
-  //       });
-  //     };
-  //   };
-
-  //   new p5(sketch);
-  // }
-
-  // testBruteCollinearPoints(points);
+  //   segments.forEach((segment) => {
+  //     console.log(segment.toString());
+  //     segment.draw();
+  //   });
+  // };
 
   p.draw = function () {
     p.translate(padding, height - padding);
