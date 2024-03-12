@@ -1,4 +1,5 @@
 import p5 from "p5";
+import mergeSort from "./src/mergeSort";
 
 const width: number = 800;
 const height: number = 500;
@@ -74,8 +75,8 @@ let sketch = function (p) {
       if (this.y === that.y) {
         return 0;
       }
-  
-      // Acutal calculation lol
+
+      // Acutal calculation
       return (that.y - this.y) / (that.x - this.x);
     }
   }
@@ -102,23 +103,45 @@ let sketch = function (p) {
     toString(): string {
       // DO NOT MODIFY
 
-      return `${this.p} -> ${this.q}`
+      return `${this.p} -> ${this.q}`;
     }
   }
 
   class BruteCollinearPoints {
+    points: Point[];
+    segments: LineSegment[];
+
     constructor(points: Point[]) {
-      // YOUR CODE HERE
+      this.points = points;
+      this.segments = [];
+
+      for (let i = 0; i < points.length; i++) {
+        for (let j = i + 1; j < points.length; j++) {
+          for (let k = j + 1; k < points.length; k++) {
+            for (let l = k + 1; l < points.length; l++) {
+              const p = points[i];
+              const q = points[j];
+              const r = points[k];
+              const s = points[l];
+
+              if (
+                p.slopeTo(q) === p.slopeTo(r) &&
+                p.slopeTo(q) === p.slopeTo(s)
+              ) {
+                this.segments.push(new LineSegment(p, s));
+              }
+            }
+          }
+        }
+      }
     }
 
     numberOfSegments(): number {
-      // YOUR CODE HERE
-      return 0;
+      return this.segments.length;
     }
 
-    segments(): LineSegment[] {
-      // YOUR CODE HERE
-      return [];
+    segmentsRead(): LineSegment[] {
+      return this.segments;
     }
   }
 
@@ -160,9 +183,44 @@ let sketch = function (p) {
     new Point(14000, 10000),
   ];
 
+  // TEST BRUTE COLLIEAR POINTS
+  // function testBruteCollinearPoints(points: Point[]) {
+  //   let sketch = function (p) {
+  //     p.setup = function () {
+  //       p.createCanvas(width, height);
+  //       p.strokeWeight(3);
+  //       p.stroke("blue");
+  //     };
+
+  //     p.draw = function () {
+  //       p.background(255);
+
+  //       const bruteCollinearPoints = new BruteCollinearPoints(points);
+
+  //       const segments = bruteCollinearPoints.segmentsRead();
+
+  //       points.forEach((point) => {
+  //         p.stroke("black");
+  //         p.strokeWeight(8);
+  //         p.point(point.x, point.y);
+  //       });
+
+  //       segments.forEach((segment) => {
+  //         p.stroke("red");
+  //         p.strokeWeight(2);
+  //         p.line(segment.p.x, segment.p.y, segment.q.x, segment.q.y);
+  //       });
+  //     };
+  //   };
+
+  //   new p5(sketch);
+  // }
+
+  // testBruteCollinearPoints(points);
+
   p.draw = function () {
     p.translate(padding, height - padding);
-    p.scale(1/100, -1/100);
+    p.scale(1 / 100, -1 / 100);
 
     // Call your draw and drawTo here.
 
