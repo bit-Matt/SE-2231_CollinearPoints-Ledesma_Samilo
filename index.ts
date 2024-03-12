@@ -124,7 +124,15 @@ let sketch = function (p) {
 
   class FastCollinearPoints {
     constructor(points: Point[]) {
-      // YOUR CODE HERE
+      if (points === null) {
+        throw new Error('Null argument');
+      }
+      if (points.some((point) => point.x === null || point.y === null)) {
+        throw new Error('Null coordinate in point');
+      }
+      // if () {
+      //   throw new Error('Contains duplicate points');
+      // }
     }
 
     numberOfSegments(): number {
